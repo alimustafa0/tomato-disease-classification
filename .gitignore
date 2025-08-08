@@ -1,0 +1,23 @@
+# Environment
+.venv/
+env/
+
+# Data
+data/processed/
+*.csv
+*.json
+
+# Models
+models/*.pth
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+*.log
+
+# DVC
+.dvc/
+.dvcignore
