@@ -1,0 +1,7 @@
+# app/config.yaml
+
+# Application-specific configurations
+app_name: "Tomato Disease Detector"
+app_version: "1.0.0"
+# You might add paths or other app settings here if they are specific to the app layer
+# and not related to model training/data processing.

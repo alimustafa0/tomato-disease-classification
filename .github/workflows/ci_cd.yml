@@ -1,0 +1,64 @@
+# .github/workflows/ci_cd.yml
+
+name: CI/CD Pipeline for Tomato Disease Classifier
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9' # Use the same Python version as in your Dockerfile and venv
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # Install dependencies from the app's requirements.txt
+        pip install -r app/requirements.txt
+        # Install development dependencies if any (e.g., pytest)
+        pip install pytest pyyaml scikit-learn matplotlib seaborn tqdm
+
+    - name: Run unit tests
+      # Adjust the path if your tests are organized differently
+      run: |
+        pytest tests/test_data_preprocessing.py
+        # Add commands to run other tests as you create them (e.g., for train, evaluate, predict)
+        # pytest tests/test_train.py
+        # pytest tests/test_evaluate.py
+        # pytest tests/test_predict.py
+
+    - name: Build Docker image (optional, for verification)
+      # This step verifies the Dockerfile can be built without pushing to a registry
+      run: docker build -t tomato-disease-classifier-app -f app/Dockerfile .
+
+  # You can add a separate deployment job here
+  # deploy:
+  #   needs: build_and_test
+  #   if: github.ref == 'refs/heads/main' # Deploy only from main branch
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+  #     - name: Build and push Docker image (example for Docker Hub)
+  #       env:
+  #         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  #         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  #       run: |
+  #         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  #         docker build -t your_docker_username/tomato-disease-classifier:latest -f app/Dockerfile .
+  #         docker push your_docker_username/tomato-disease-classifier:latest
+  #     # Add steps for deployment to a cloud provider (e.g., GKE, Azure Container Apps, AWS ECS)

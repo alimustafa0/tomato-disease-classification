@@ -1,0 +1,22 @@
+# params.yaml
+
+# Data Preprocessing Parameters (from previous steps)
+data_preprocessing:
+  image_size: [224, 224] # Height, Width
+  train_split_ratio: 0.7
+  val_split_ratio: 0.15
+  test_split_ratio: 0.15
+  random_seed: 42
+
+# Model Training Parameters
+train:
+  model_name: "resnet18" # Or "resnet50", "vgg16", etc.
+  num_classes: 10 # Based on your data exploration output (10 disease classes)
+  batch_size: 32
+  epochs: 2
+  learning_rate: 0.001
+  optimizer: "Adam" # Options: Adam, SGD
+  loss_function: "CrossEntropyLoss" # Standard for multi-class classification
+  early_stopping_patience: 10 # Number of epochs to wait for improvement before stopping
+  device: "cuda" # or "cpu" if GPU is not available
+  pretrained: true # Use pre-trained weights for the model
