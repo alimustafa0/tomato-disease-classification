@@ -1,23 +1,41 @@
-# Environment
+# .gitignore
+
+# Virtual environment
+/venv/
 .venv/
-env/
 
-# Data
-data/processed/
-*.csv
-*.json
-
-# Models
-models/*.pth
-
-# Jupyter Notebooks
-.ipynb_checkpoints/
-
-# Python
+# Python artifacts
 __pycache__/
 *.pyc
-*.log
+*.pyo
+*.pyd
+.Python/
 
-# DVC
+# IDE specific files
+.vscode/
+.idea/
+*.iml
+
+# DVC artifacts (data and models managed by DVC, not Git directly)
+# DVC tracks .dvc files, not the actual data/model files
+/data/processed/
+/models/*.pth  # Specific model files, .pth or .h5 etc.
+/models/*.onnx
+/models/*.pt
 .dvc/
-.dvcignore
+.DS_Store # macOS system files
+
+# Jupyter Notebook specific
+.ipynb_checkpoints/
+*.ipynb-filter
+*.jupyter/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+temp/
+logs/
+
+# Environment variables
+.env

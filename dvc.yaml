@@ -1,0 +1,18 @@
+# dvc.yaml
+
+stages:
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py data/raw/ data/processed/
+    deps:
+      - src/data_preprocessing.py
+      - data/raw/
+    outs:
+      - data/processed/
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - params.yaml
+      - data/processed/
+    outs:
+      - models/model.pth
